@@ -1,15 +1,34 @@
 <html>
+
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+
   <head>
+
     <title>Braves AR</title>
+
     <script src="three.min.js"></script>
     <script src="argon.min.js"></script>
     <script src="./app.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="design.css"/>  
+
   </head>
+
+
   <body onload="initialize()">
+
     <div id="argon">
+
+      <h1 align="center">Welcome to Braves AR</h1>
+
+      <div class="logos" align="center" style="height:100px;">
+        <img src="images/braves_logo.png" alt="Atlanta Braves Logo" align ="middle" style="width:100px;height:100px;">
+        <img src="images/suntrust_logo.png" alt="SunTrust Logo" align="middle" style="width:100px;height:58px;">
+      </div>
       
-      <h3>What's your section and row?</h3>
+      <!-- <h3>What's your section and row?</h3>
       <form id = "form">
         Section (1-140):<br>
         <input type="text" id="sectionInput"><br>
@@ -17,11 +36,14 @@
         <input type="text" id="rowInput"><br>
       </form>
 
-      <button onclick="getSectionAndRow()">Submit</button>
+      <button onclick="getSectionAndRow()">Submit</button> -->
 
 
-
+      <div align="center" style="footer" id="location"></div>
 
     </div>
+
   </body>
+
+
 </html>
