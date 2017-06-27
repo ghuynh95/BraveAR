@@ -16,13 +16,11 @@ function initialize() {
 	renderer.setPixelRatio(window.devicePixelRatio);
 	app.view.element.appendChild(renderer.domElement);
 
-	// createCoordinateMap();
+	// get lcoation of user
 	locate();
-
 }
 
 function locate() {
-
 	var output = document.getElementById('location');
 
 	if (!navigator.geolocation) {
@@ -47,49 +45,4 @@ function locate() {
 	output.innerHTML = "<p>Locating...</p>";
 
 	navigator.geolocation.getCurrentPosition(success, error);
-
-
-}
-
-
-
-
-
-
-
-
-// under this commend are functions for obtaining a user's coordinates via section and row
-
-
-function getSectionAndRow() {
-	sectionElement = document.getElementById('sectionInput');
-	rowElement = document.getElementById('rowInput');
-
-	form = document.getElementById('form');
-
-	section = sectionElement.value;
-	row = rowElement.value;
-
-	form.style.display = 'none';
-
-	var coordinates = getCoordinates(section, row);
-	console.log(coordinates);
-}
-
-//gets coordinates from dictionary with section and row as keys
-function getCoordinates(section, row) {
-	var secrow = section + "," + row;
-	var coord = dictionary[secrow];
-	if (coord == "") {
-		console.log("Error getting coordinates");
-	} else {
-		return coord;
-	}
-}
-
-function createCoordinateMap() {
-	dictionary = {};
-	dictionary["20,10"] = "0,0,0";
-	dictionary["30,20"] = "1,1,1";
-
 }
