@@ -39,6 +39,38 @@ renderer.setPixelRatio(window.devicePixelRatio);
 app.view.element.appendChild(renderer.domElement);
 // We put some elements in the index.html, for convenience.
 var locationElement = document.getElementById("location");
+
+locate();
+
+function locate(){
+  var output = document.getElementById('location-output');
+
+  if (!navigator.geolocation) {
+    console.log("No such navigator");
+    output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+    return;
+  }
+
+  function success(position) {
+    console.log("Success");
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+
+    output.innerHTML = "<p>Latitude: " + latitude + "° <br>Longitude: " + longitude + "°</p>";
+  }
+
+  function error() {
+    console.log("Error");
+    output.innerHTML = "Unable to retrieve your location";
+  }
+
+  output.innerHTML = "<p>Locating...</p>";
+
+  navigator.geolocation.getCurrentPosition(success, error);
+}
+
+
+
 // All geospatial objects need to have an Object3D linked to a Cesium Entity.
 // We need to do this because Argon needs a mapping between Entities and Object3Ds.
 //
