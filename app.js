@@ -1,86 +1,33 @@
-/// <reference types="@argonjs/argon" />
-/// <reference types="three" />
-// grab some handles on APIs we use
+// APIs
 var Cesium = Argon.Cesium;
 var Cartesian3 = Argon.Cesium.Cartesian3;
 var ReferenceFrame = Argon.Cesium.ReferenceFrame;
 var JulianDate = Argon.Cesium.JulianDate;
 var CesiumMath = Argon.Cesium.CesiumMath;
+
 // set up Argon
 var app = Argon.init();
-// Tell argon what local coordinate system you want.  The default coordinate
-// frame used by Argon is Cesium's FIXED frame, which is centered at the center
-// of the earth and oriented with the earth's axes.
-// The FIXED frame is inconvenient for a number of reasons: the numbers used are
-// large and cause issues with rendering, and the orientation of the user's "local
-// view of the world" is different that the FIXED orientation (my perception of "up"
-// does not correspond to one of the FIXED axes).
-// Therefore, Argon uses a local coordinate frame that sits on a plane tangent to
-// the earth near the user's current location.  This frame automatically changes if the
-// user moves more than a few kilometers.
-// The EUS frame cooresponds to the typical 3D computer graphics coordinate frame, so we use
-// that here.  The other option Argon supports is localOriginEastNorthUp, which is
-// more similar to what is used in the geospatial industry
 app.context.defaultReferenceFrame = app.context.localOriginEastUpSouth;
-// set up THREE.  Create a scene, a perspective camera and an object
-// for the user's location
+
+// set up THREE
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera();
 var userLocation = new THREE.Object3D;
 scene.add(camera);
 scene.add(userLocation);
-// In this demo, we are  rendering the 3D graphics with WebGL,
-// using the standard WebGLRenderer
 var renderer = new THREE.WebGLRenderer({
     alpha: true,
     logarithmicDepthBuffer: true
 });
 renderer.setPixelRatio(window.devicePixelRatio);
 app.view.element.appendChild(renderer.domElement);
-// We put some elements in the index.html, for convenience.
+
 var locationElement = document.getElementById("location");
 
+// get location of user
 locate();
 
-function locate(){
-  var output = document.getElementById('location-output');
-
-  if (!navigator.geolocation) {
-    console.log("No such navigator");
-    output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
-    return;
-  }
-
-  function success(position) {
-    console.log("Success");
-    var latitude = position.coords.latitude;
-    var longitude = position.coords.longitude;
-
-    output.innerHTML = "<p>Latitude: " + latitude + "° <br>Longitude: " + longitude + "°</p>";
-  }
-
-  function error() {
-    console.log("Error");
-    output.innerHTML = "Unable to retrieve your location";
-  }
-
-  output.innerHTML = "<p>Locating...</p>";
-
-  navigator.geolocation.getCurrentPosition(success, error);
-}
-
-
-
-// All geospatial objects need to have an Object3D linked to a Cesium Entity.
-// We need to do this because Argon needs a mapping between Entities and Object3Ds.
-//
-// Here, we will position a cube near our starting location.  This geolocated object starts without a
-// location, until our reality is set and we know the location.  Each time the reality changes, we update
-// the cube position.
-// This code creates a 1m cube with a wooden box texture on it,
-// that we will attach to the geospatial object when we create it.
-// Box texture from https://www.flickr.com/photos/photoshoproadmap/8640003215/sizes/l/in/photostream/
-// licensed under https://creativecommons.org/licenses/by/2.0/legalcode
+// create model of box
 var boxGeoObject = new THREE.Object3D();
 var box = new THREE.Object3D();
 var loader = new THREE.TextureLoader();
@@ -96,9 +43,9 @@ var boxGeoEntity = new Argon.Cesium.Entity({
     position: Cartesian3.ZERO,
     orientation: Cesium.Quaternion.IDENTITY
 });
+
 // the updateEvent is called each time the 3D world should be
-// rendered, before the renderEvent.  The state of your application
-// should be updated here.
+// rendered, before the renderEvent
 var boxInit = false;
 app.updateEvent.addEventListener(function (frame) {
     // get the position and orientation (the "pose") of the user
@@ -141,6 +88,7 @@ app.updateEvent.addEventListener(function (frame) {
     // to make it a little less boring
     box.rotateY(3 * frame.deltaTime / 10000);
 });
+
 // renderEvent is fired whenever argon wants the app to update its display
 app.renderEvent.addEventListener(function () {
     // set the renderers to know the current size of the viewport.
@@ -168,3 +116,30 @@ app.renderEvent.addEventListener(function () {
         renderer.render(scene, camera);
     }
 });
+
+function locate(){
+  var output = document.getElementById('location');
+
+  if (!navigator.geolocation) {
+    console.log("No such navigator");
+    output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+    return;
+  }
+
+  function success(position) {
+    console.log("Success");
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+
+    output.innerHTML = "<p>Latitude: " + latitude + "° <br>Longitude: " + longitude + "°</p>";
+  }
+
+  function error() {
+    console.log("Error");
+    output.innerHTML = "Unable to retrieve your location";
+  }
+
+  output.innerHTML = "<p>Locating...</p>";
+
+  navigator.geolocation.getCurrentPosition(success, error);
+}

@@ -1,31 +1,3 @@
-/*body
-{
-  background-color: #ff0000;
-}
-
-h1
-{
-  font-size: 70px;
-  color: blue;
-  font-family: fantasy;
-  background-color: #ff0000;
-}
-
-input[type=text]
-{
-  width: 50%;
-  text-align:center;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 3px solid #ccc;
-  border-radius: 50px;
-  box-sizing: border-box;
-}
-*/
-
-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+body {
+  text-align: center;
 }
