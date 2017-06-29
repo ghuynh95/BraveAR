@@ -40,7 +40,7 @@ loader.load('box.png', function (texture) {
 boxGeoObject.add(box);
 var boxGeoEntity = new Argon.Cesium.Entity({
     name: "I have a box",
-    position: Cartesian3.ZERO,
+    position: Cartesian3.fromDegrees(-84.39468204975128, 33.77758226630099),
     orientation: Cesium.Quaternion.IDENTITY
 });
 
@@ -66,11 +66,13 @@ app.updateEvent.addEventListener(function (frame) {
         var defaultFrame = app.context.defaultReferenceFrame;
         // set the box's position to 10 meters away from the user.
         // First, clone the userPose postion, and add 10 to the X
-        var boxPos = userPose.position.clone();
-        boxPos.x += 10;
+
+        // console.log("user: " + userPose.position);
+        // var boxPos = userPose.position.clone();
+        // boxPos.x += 10;
         // set the value of the box Entity to this local position, by
         // specifying the frame of reference to our local frame
-        boxGeoEntity.position.setValue(boxPos, defaultFrame);
+        // boxGeoEntity.position.setValue(boxPos, defaultFrame);
         // orient the box according to the local world frame
         boxGeoEntity.orientation.setValue(Cesium.Quaternion.IDENTITY);
         // now, we want to move the box's coordinates to the FIXED frame, so
@@ -118,11 +120,11 @@ app.renderEvent.addEventListener(function () {
 });
 
 function locate(){
-  var output = document.getElementById('location');
+  var output = document.getElementById('location-output');
 
   if (!navigator.geolocation) {
     console.log("No such navigator");
-    output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+    output.innerHTML = "Geolocation is not supported by your browser";
     return;
   }
 
@@ -131,7 +133,7 @@ function locate(){
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
 
-    output.innerHTML = "<p>Latitude: " + latitude + "° <br>Longitude: " + longitude + "°</p>";
+    output.innerHTML = "Latitude: " + latitude + "&deg; <br>Longitude: " + longitude + "&deg;";
   }
 
   function error() {
@@ -139,7 +141,7 @@ function locate(){
     output.innerHTML = "Unable to retrieve your location";
   }
 
-  output.innerHTML = "<p>Locating...</p>";
+  output.innerHTML = "Locating...";
 
   navigator.geolocation.getCurrentPosition(success, error);
 }
