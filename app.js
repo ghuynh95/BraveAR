@@ -84,10 +84,10 @@ app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
 var buzz = new THREE.Object3D;
 var loader = new THREE.TextureLoader();
 loader.load('images/buzz.png', function (texture) {
-    var geometry = new THREE.BoxGeometry(10, 10, 10);
+    var geometry = new THREE.BoxGeometry(1, 1, 1);
     var material = new THREE.MeshBasicMaterial({ map: texture });
     var mesh = new THREE.Mesh(geometry, material);
-    mesh.scale.set(100, 100, 100);
+    // mesh.scale.set(100, 100, 100);
     buzz.add(mesh);
 });
 // have our geolocated object start somewhere, in this case
@@ -96,7 +96,7 @@ loader.load('images/buzz.png', function (texture) {
 // (we found the lon/lat of Georgia Tech using Google Maps)
 var gatechGeoEntity = new Cesium.Entity({
     name: "Georgia Tech",
-    position: Cartesian3.fromDegrees(-84.398881, 33.778463),
+    position: Cartesian3.fromDegrees(-84.3973508477211, 33.774681692767786, 284),
     orientation: Cesium.Quaternion.IDENTITY
 });
 var gatechGeoTarget = new THREE.Object3D;
