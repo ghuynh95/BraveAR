@@ -40,9 +40,10 @@ a {
     pointer-events: none;
 }
 
+/*this is the box with our coordinates*/
 button {
 	color: white;
-	background: rgba(27,55,55,0.75);;
+	background: rgba(255,55,55,0.75);;
 	outline: 1px solid rgba(127,255,255,0.75);
 	border: 0px;
 	margin-bottom: 20px;
