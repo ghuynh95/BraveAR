@@ -365,22 +365,3 @@ app.renderEvent.addEventListener(function () {
         hud.render(subview.index);
     }
 });
-
-app.vuforia.isAvailable().then(function (available) {
-    // vuforia not available on this platform
-    if (!available) {
-        console.warn("vuforia not available on this platform.");
-        return;
-    }
-    // tell argon to initialize vuforia for our app, using our license information.
-    app.vuforia.init({
-        encryptedLicenseData: "-----BEGIN PGP MESSAGE-----\nVersion: OpenPGP.js v2.3.2\nComment: http://openpgpjs.org\n\n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\n=1Dvn\n-----END PGP MESSAGE-----"
-    }).then(function (api) {
-        console.log("We gucci");
-        //
-        // the vuforia API is ready, so we can start using it.
-        //
-    }).catch(function (err) {
-        console.log("vuforia failed to initialize: " + err.message);
-    });
-});
