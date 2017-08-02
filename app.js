@@ -56,69 +56,10 @@ var holder = document.createElement('div');
 var hudDescription = document.getElementById('description');
 holder.appendChild(hudDescription);
 hudContent.appendChild(holder);
-// Tell argon what local coordinate system you want.  The default coordinate
-// frame used by Argon is Cesium's FIXED frame, which is centered at the center
-// of the earth and oriented with the earth's axes.
-// The FIXED frame is inconvenient for a number of reasons: the numbers used are
-// large and cause issues with rendering, and the orientation of the user's "local
-// view of the world" is different that the FIXED orientation (my perception of "up"
-// does not correspond to one of the FIXED axes).
-// Therefore, Argon uses a local coordinate frame that sits on a plane tangent to
-// the earth near the user's current location.  This frame automatically changes if the
-// user moves more than a few kilometers.
-// The EUS frame cooresponds to the typical 3D computer graphics coordinate frame, so we use
-// that here.  The other option Argon supports is localOriginEastNorthUp, which is
-// more similar to what is used in the geospatial industry
-app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
-// All geospatial objects need to have an Object3D linked to a Cesium Entity.
-// We need to do this because Argon needs a mapping between Entities and Object3Ds.
-//
-// Here we create two objects, showing two slightly different approaches.
-//
-// First, we position a cube near Georgia Tech using a known LLA.
-//
-// Second, we will position a cube near our starting location.  This geolocated object starts without a
-// location, until our reality is set and we know the location.  Each time the reality changes, we update
-// the cube position.
-// create a 100m cube with a Buzz texture on it, that we will attach to a geospatial object at Georgia Tech
 
-// bases = [
-//   // GLC
-//   Cartesian3.fromDegrees(-84.39662463963032, 33.781942974496715, 275),
-//   Cartesian3.fromDegrees(-84.39676277339458, 33.78193628646397, 276)
-// ];
-//
-// baseGeoTargets = [];
-// baseGeoEntities = [];
-// baseObjects = [];
-//
-// for (var i = 0; i < bases.length; i++) {
-//   var base = new THREE.Object3D;
-//   var loader = new THREE.TextureLoader();
-//   loader.load('images/braves_logo.png', function (texture) {
-//       //var geometry = new THREE.BoxGeometry(10, 10, 10);
-//       var geometry = new THREE.BoxGeometry(10, 10, 10);
-//       var material = new THREE.MeshBasicMaterial({ map: texture });
-//       var mesh = new THREE.Mesh(geometry, material);
-//       //mesh.scale.set(100, 100, 100);
-//       base.add(mesh);
-//   });
-//
-//   var baseGeoEntity = new Cesium.Entity({
-//       name: "Base " + i,
-//       position: bases[i],
-//       orientation: Cesium.Quaternion.IDENTITY
-//   });
-//   var baseGeoTarget = new THREE.Object3D;
-//   baseGeoTarget.add(base);
-//   scene.add(baseGeoTarget);
-//
-//   baseGeoTargets[i] = baseGeoTarget;
-//   baseObjects[i] = base;
-//   baseGeoEntities[i] = baseGeoEntity;
-//
-//   console.log("Base " + i + " created");
-// }
+app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
+
+// Creation of objects
 
 var base1 = new THREE.Object3D;
 var loader = new THREE.TextureLoader();
@@ -132,8 +73,8 @@ loader.load('images/braves_logo.png', function (texture) {
 });
 
 var base1GeoEntity = new Cesium.Entity({
-    name: "Base 1",
-    position: Cartesian3.fromDegrees(-84.39662463963032, 33.781942974496715, 275),
+    name: "Home Plate (Base 1)",
+    position: Cartesian3.fromDegrees(-84.46798883378506, 33.89113785584963, 313),
     orientation: Cesium.Quaternion.IDENTITY
 });
 var base1GeoTarget = new THREE.Object3D;
@@ -160,8 +101,8 @@ loader.load('images/braves_logo.png', function (texture) {
 });
 
 var base2GeoEntity = new Cesium.Entity({
-    name: "Base 2",
-    position: Cartesian3.fromDegrees(-84.39676277339458, 33.78193628646397, 276),
+    name: "First Base (Base 2)",
+    position: Cartesian3.fromDegrees(-84.46809142827988, 33.89091631903112, 311),
     orientation: Cesium.Quaternion.IDENTITY
 });
 var base2GeoTarget = new THREE.Object3D;
@@ -188,8 +129,8 @@ loader.load('images/braves_logo.png', function (texture) {
 });
 
 var base3GeoEntity = new Cesium.Entity({
-    name: "Base 3",
-    position: Cartesian3.fromDegrees(-84.3966219574213, 33.78208565240452, 277),
+    name: "Second Base (Base 3)",
+    position: Cartesian3.fromDegrees(-84.46776285767555, 33.890808333539134, 301),
     orientation: Cesium.Quaternion.IDENTITY
 });
 var base3GeoTarget = new THREE.Object3D;
@@ -216,8 +157,8 @@ loader.load('images/braves_logo.png', function (texture) {
 });
 
 var base4GeoEntity = new Cesium.Entity({
-    name: "Base 4",
-    position: Cartesian3.fromDegrees(-84.39677618443966, 33.782117977834986, 278),
+    name: "Third Base (Base 4)",
+    position: Cartesian3.fromDegrees(-84.4676810503006, 33.891019851384755, 301),
     orientation: Cesium.Quaternion.IDENTITY
 });
 var base4GeoTarget = new THREE.Object3D;
@@ -244,8 +185,8 @@ loader.load('images/braves_logo.png', function (texture) {
 });
 
 var base5GeoEntity = new Cesium.Entity({
-    name: "John",
-    position: Cartesian3.fromDegrees(-84.15679720000003, 34.0563506, 314),
+    name: "GLC",
+    position: Cartesian3.fromDegrees(-84.39657837152481, 33.7819106490002, 275),
     orientation: Cesium.Quaternion.IDENTITY
 });
 var base5GeoTarget = new THREE.Object3D;
@@ -257,34 +198,6 @@ scene.add(base5GeoTarget);
 // baseGeoEntities[i] = baseGeoEntity;
 
 console.log("Base 5 created");
-
-//----------
-
-var base6 = new THREE.Object3D;
-var loader = new THREE.TextureLoader();
-loader.load('images/braves_logo.png', function (texture) {
-    //var geometry = new THREE.BoxGeometry(10, 10, 10);
-    var geometry = new THREE.BoxGeometry(10, 10, 10);
-    var material = new THREE.MeshBasicMaterial({ map: texture });
-    var mesh = new THREE.Mesh(geometry, material);
-    //mesh.scale.set(100, 100, 100);
-    base6.add(mesh);
-});
-
-var base6GeoEntity = new Cesium.Entity({
-    name: "Arjun",
-    position: Cartesian3.fromDegrees(-84.2761898, 33.8395538, 287),
-    orientation: Cesium.Quaternion.IDENTITY
-});
-var base6GeoTarget = new THREE.Object3D;
-base6GeoTarget.add(base6);
-scene.add(base6GeoTarget);
-
-// baseGeoTargets[i] = baseGeoTarget;
-// baseObjects[i] = base;
-// baseGeoEntities[i] = baseGeoEntity;
-
-console.log("Base 6 created");
 
 //----------
 
@@ -317,23 +230,6 @@ app.updateEvent.addEventListener(function (frame) {
         stage.position.copy(stagePose.position);
         stage.quaternion.copy(stagePose.orientation);
     }
-
-    // for (var i = 0; i < bases.length; i++) {
-    //   var baseGeoEntity = baseGeoEntities[i];
-    //   var baseGeoTarget = baseGeoTargets[i];
-    //   var basePose = app.context.getEntityPose(baseGeoEntity);
-    //   if (basePose.poseStatus & Argon.PoseStatus.KNOWN) {
-    //       baseGeoTarget.position.copy(basePose.position);
-    //       console.log("Coordinates of base " + i + " obtained successfully");
-    //   }
-    //   else {
-    //       console.log("Failed in getting coordinates for base " + i);
-    //       // initialize to a fixed location in case we can't convert to geospatial
-    //       baseGeoTarget.position.y = 0;
-    //       baseGeoTarget.position.z = -4000;
-    //       baseGeoTarget.position.x = 1000;
-    //   }
-    // }
 
     var base1Pose = app.context.getEntityPose(base1GeoEntity);
     if (base1Pose.poseStatus & Argon.PoseStatus.KNOWN) {
@@ -400,31 +296,11 @@ app.updateEvent.addEventListener(function (frame) {
         base5GeoTarget.position.x = 1000;
     }
 
-    var base6Pose = app.context.getEntityPose(base6GeoEntity);
-    if (base6Pose.poseStatus & Argon.PoseStatus.KNOWN) {
-        base6GeoTarget.position.copy(base6Pose.position);
-        console.log("Coordinates of base 6 obtained successfully");
-    }
-    else {
-        console.log("Failed in getting coordinates for base 6");
-        // initialize to a fixed location in case we can't convert to geospatial
-        base6GeoTarget.position.y = 0;
-        base6GeoTarget.position.z = -4000;
-        base6GeoTarget.position.x = 1000;
-    }
-
-    // rotate the boxes at a constant speed, independent of frame rates
-    // to make it a little less boring
-    // for (var i = 0; i < bases.length; i++) {
-    //   var base = baseObjects[i];
-    //   base.rotateY(2 * frame.deltaTime / 10000);
-    // }
     base1.rotateY(2 * frame.deltaTime / 10000);
     base2.rotateY(2 * frame.deltaTime / 10000);
     base3.rotateY(2 * frame.deltaTime / 10000);
     base4.rotateY(2 * frame.deltaTime / 10000);
     base5.rotateY(2 * frame.deltaTime / 10000);
-    base6.rotateY(2 * frame.deltaTime / 10000);
 
     var infoText = "Geospatial Argon example:<br>";
     // get user position in global coordinates
