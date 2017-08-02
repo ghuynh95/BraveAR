@@ -110,22 +110,32 @@ function updateStats() {
     },
     success: function(data) {
       console.log(data['game']);
-      var runners = data['game']['outcome']['runners'];
+      //var runners = data['game']['outcome']['runners'];
       var runners = [
-        {'starting_base': 1, 'first_name': 'Freddie', 'last_name': 'Freeman'},
-        {'starting_base': 2, 'first_name': 'Nick', 'last_name': 'Markakis'}
-      ]
+        {'starting_base': 1, 'preferred_name': 'Freddie', 'last_name': 'Freeman'},
+        {'starting_base': 2, 'preferred_name': 'Nick', 'last_name': 'Markakis'}
+      ];
       if (runners != null) {
         runners.forEach(function(runner) {
           var base;
+          var mesh;
           if (runner['starting_base'] === 1) {
-            base = base2;
+            mesh = mesh2;
           } else if (runner['starting_base'] === 2) {
-            base = base3;
+            mesh = mesh3;
           } else if (runner['starting_base'] === 3) {
-            base = base4;
+            mesh = mesh4;
           }
-          console.log(base);
+
+          var name = runner['preferred_name'].toLowerCase() + "_" + runner['last_name'].toLowerCase();
+
+          // update the base image
+          loader.load('images/lineup/' + name + ".jpg", function (texture) {
+              var material = new THREE.MeshBasicMaterial({ map: texture });
+              mesh.material = material;
+          });
+          
+          console.log("Mesh updated successfully");
         });
       }
     }
@@ -140,18 +150,17 @@ function updateStats() {
 // var response = JSON.parse(xhttp.responseText);
 // console.log(response);
 
-
 var base1 = new THREE.Object3D;
+var mesh1;
 var loader = new THREE.TextureLoader();
 loader.load('images/braves_logo.png', function (texture) {
     //var geometry = new THREE.BoxGeometry(10, 10, 10);
     var geometry = new THREE.BoxGeometry(10, 10, 10);
     var material = new THREE.MeshBasicMaterial({ map: texture });
-    var mesh = new THREE.Mesh(geometry, material);
+    mesh1 = new THREE.Mesh(geometry, material);
     //mesh.scale.set(100, 100, 100);
-    base1.add(mesh);
+    base1.add(mesh1);
 });
-
 var base1GeoEntity = new Cesium.Entity({
     name: "Home Plate (Base 1)",
     position: Cartesian3.fromDegrees(-84.46798883378506, 33.89113785584963, 313),
@@ -160,26 +169,21 @@ var base1GeoEntity = new Cesium.Entity({
 var base1GeoTarget = new THREE.Object3D;
 base1GeoTarget.add(base1);
 scene.add(base1GeoTarget);
-
-// baseGeoTargets[i] = baseGeoTarget;
-// baseObjects[i] = base;
-// baseGeoEntities[i] = baseGeoEntity;
-
 console.log("Base 1 created");
 
 //----------
 
 var base2 = new THREE.Object3D;
+var mesh2;
 var loader = new THREE.TextureLoader();
 loader.load('images/braves_logo.png', function (texture) {
     //var geometry = new THREE.BoxGeometry(10, 10, 10);
     var geometry = new THREE.BoxGeometry(10, 10, 10);
     var material = new THREE.MeshBasicMaterial({ map: texture });
-    var mesh = new THREE.Mesh(geometry, material);
+    mesh2 = new THREE.Mesh(geometry, material);
     //mesh.scale.set(100, 100, 100);
-    base2.add(mesh);
+    base2.add(mesh2);
 });
-
 var base2GeoEntity = new Cesium.Entity({
     name: "First Base (Base 2)",
     position: Cartesian3.fromDegrees(-84.46809142827988, 33.89091631903112, 311),
@@ -188,26 +192,21 @@ var base2GeoEntity = new Cesium.Entity({
 var base2GeoTarget = new THREE.Object3D;
 base2GeoTarget.add(base2);
 scene.add(base2GeoTarget);
-
-// baseGeoTargets[i] = baseGeoTarget;
-// baseObjects[i] = base;
-// baseGeoEntities[i] = baseGeoEntity;
-
 console.log("Base 2 created");
 
 //----------
 
 var base3 = new THREE.Object3D;
+var mesh3;
 var loader = new THREE.TextureLoader();
 loader.load('images/braves_logo.png', function (texture) {
     //var geometry = new THREE.BoxGeometry(10, 10, 10);
     var geometry = new THREE.BoxGeometry(10, 10, 10);
     var material = new THREE.MeshBasicMaterial({ map: texture });
-    var mesh = new THREE.Mesh(geometry, material);
+    mesh3 = new THREE.Mesh(geometry, material);
     //mesh.scale.set(100, 100, 100);
-    base3.add(mesh);
+    base3.add(mesh3);
 });
-
 var base3GeoEntity = new Cesium.Entity({
     name: "Second Base (Base 3)",
     position: Cartesian3.fromDegrees(-84.46776285767555, 33.890808333539134, 301),
@@ -216,26 +215,21 @@ var base3GeoEntity = new Cesium.Entity({
 var base3GeoTarget = new THREE.Object3D;
 base3GeoTarget.add(base3);
 scene.add(base3GeoTarget);
-
-// baseGeoTargets[i] = baseGeoTarget;
-// baseObjects[i] = base;
-// baseGeoEntities[i] = baseGeoEntity;
-
 console.log("Base 3 created");
 
 //----------
 
 var base4 = new THREE.Object3D;
+var mesh4;
 var loader = new THREE.TextureLoader();
 loader.load('images/braves_logo.png', function (texture) {
     //var geometry = new THREE.BoxGeometry(10, 10, 10);
     var geometry = new THREE.BoxGeometry(10, 10, 10);
     var material = new THREE.MeshBasicMaterial({ map: texture });
-    var mesh = new THREE.Mesh(geometry, material);
+    mesh4 = new THREE.Mesh(geometry, material);
     //mesh.scale.set(100, 100, 100);
-    base4.add(mesh);
+    base4.add(mesh4);
 });
-
 var base4GeoEntity = new Cesium.Entity({
     name: "Third Base (Base 4)",
     position: Cartesian3.fromDegrees(-84.4676810503006, 33.891019851384755, 301),
@@ -244,26 +238,21 @@ var base4GeoEntity = new Cesium.Entity({
 var base4GeoTarget = new THREE.Object3D;
 base4GeoTarget.add(base4);
 scene.add(base4GeoTarget);
-
-// baseGeoTargets[i] = baseGeoTarget;
-// baseObjects[i] = base;
-// baseGeoEntities[i] = baseGeoEntity;
-
 console.log("Base 4 created");
 
 //----------
 
 var base5 = new THREE.Object3D;
+var mesh5;
 var loader = new THREE.TextureLoader();
 loader.load('images/braves_logo.png', function (texture) {
     //var geometry = new THREE.BoxGeometry(10, 10, 10);
     var geometry = new THREE.BoxGeometry(10, 10, 10);
     var material = new THREE.MeshBasicMaterial({ map: texture });
-    var mesh = new THREE.Mesh(geometry, material);
+    mesh5 = new THREE.Mesh(geometry, material);
     //mesh.scale.set(100, 100, 100);
-    base5.add(mesh);
+    base5.add(mesh5);
 });
-
 var base5GeoEntity = new Cesium.Entity({
     name: "GLC",
     position: Cartesian3.fromDegrees(-84.39657837152481, 33.7819106490002, 275),
@@ -272,11 +261,6 @@ var base5GeoEntity = new Cesium.Entity({
 var base5GeoTarget = new THREE.Object3D;
 base5GeoTarget.add(base5);
 scene.add(base5GeoTarget);
-
-// baseGeoTargets[i] = baseGeoTarget;
-// baseObjects[i] = base;
-// baseGeoEntities[i] = baseGeoEntity;
-
 console.log("Base 5 created");
 
 //----------
