@@ -82,43 +82,75 @@ app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
 // the cube position.
 // create a 100m cube with a Buzz texture on it, that we will attach to a geospatial object at Georgia Tech
 
-// bases = [
-//   // GLC
-//   Cartesian3.fromDegrees(-84.39662463963032, 33.781942974496715, 275),
-//   Cartesian3.fromDegrees(-84.39676277339458, 33.78193628646397, 276)
-// ];
-//
-// baseGeoTargets = [];
-// baseGeoEntities = [];
-// baseObjects = [];
-//
-// for (var i = 0; i < bases.length; i++) {
-//   var base = new THREE.Object3D;
-//   var loader = new THREE.TextureLoader();
-//   loader.load('images/braves_logo.png', function (texture) {
-//       //var geometry = new THREE.BoxGeometry(10, 10, 10);
-//       var geometry = new THREE.BoxGeometry(10, 10, 10);
-//       var material = new THREE.MeshBasicMaterial({ map: texture });
-//       var mesh = new THREE.Mesh(geometry, material);
-//       //mesh.scale.set(100, 100, 100);
-//       base.add(mesh);
-//   });
-//
-//   var baseGeoEntity = new Cesium.Entity({
-//       name: "Base " + i,
-//       position: bases[i],
-//       orientation: Cesium.Quaternion.IDENTITY
-//   });
-//   var baseGeoTarget = new THREE.Object3D;
-//   baseGeoTarget.add(base);
-//   scene.add(baseGeoTarget);
-//
-//   baseGeoTargets[i] = baseGeoTarget;
-//   baseObjects[i] = base;
-//   baseGeoEntities[i] = baseGeoEntity;
-//
-//   console.log("Base " + i + " created");
-// }
+
+// Get SportsRadar API data
+var baseURL = 'https://crossorigin.me/https://api.sportradar.us/mlb-t6/games/';
+var statsApiKey = 'skhgdt2naxfwhj8aw5ddvgy8'
+
+var d = new Date();
+var year = d.getFullYear();
+var month = d.getMonth() + 1;
+var date = d.getDate();
+var url = baseURL + year + '/' + month + '/' + date + '/schedule.json?api_key=' + statsApiKey;
+
+var bravesID = '12079497-e414-450a-8bf2-29f91de646bf';
+var gameID = '';
+var gameID = '88cf6dbf-9b6d-4676-9d79-71bd8ad74ba4';
+
+$.ajax({
+  url: url,
+  type: 'GET',
+  beforeSend: function(xhr) {
+    xhr.setRequestHeader('Accept', '*/*');
+  },
+  success: function(data) {
+    console.log(data);
+    data.games.forEach(function(game) {
+      if (game['away_team'] === bravesID || game['home_team'] === bravesID) {
+        // gameID = game['id'];
+      }
+    });
+    updateStats();
+  }
+});
+
+function updateStats() {
+  $.ajax({
+    url: baseURL + gameID + '/boxscore.json?api_key=' + statsApiKey,
+    type: 'GET',
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader('Accept', '*/*');
+    },
+    success: function(data) {
+      console.log(data['game']);
+      var runners = data['game']['outcome']['runners'];
+      if (runners != null) {
+        runners.forEach(function(runner) {
+          var base;
+          if (runner['starting_base'] === 0) {
+            base = base1;
+          } else if (runner['starting_base'] === 1) {
+            base = base2;
+          } else if (runner['starting_base'] === 2) {
+            base = base3;
+          } else if (runner['starting_base'] === 3) {
+            base = base4;
+          }
+          console.log(base);
+        });
+      }
+    }
+  });
+  // setTimeout(updateStats, 60000);
+}
+
+// var xhttp = new XMLHttpRequest();
+// xhttp.open("GET", "https://api.sportradar.us/mlb-t6/games/6160ac96-cfb1-460e-8665-fe185ba2bfda/boxscore.json?api_key=skhgdt2naxfwhj8aw5ddvgy8", false);
+// xhttp.setRequestHeader("Accept", "*/*");
+// xhttp.send();
+// var response = JSON.parse(xhttp.responseText);
+// console.log(response);
+
 
 var base1 = new THREE.Object3D;
 var loader = new THREE.TextureLoader();
@@ -338,10 +370,10 @@ app.updateEvent.addEventListener(function (frame) {
     var base1Pose = app.context.getEntityPose(base1GeoEntity);
     if (base1Pose.poseStatus & Argon.PoseStatus.KNOWN) {
         base1GeoTarget.position.copy(base1Pose.position);
-        console.log("Coordinates of base 1 obtained successfully");
+        // console.log("Coordinates of base 1 obtained successfully");
     }
     else {
-        console.log("Failed in getting coordinates for base 1");
+        // console.log("Failed in getting coordinates for base 1");
         // initialize to a fixed location in case we can't convert to geospatial
         base1GeoTarget.position.y = 0;
         base1GeoTarget.position.z = -4000;
@@ -351,10 +383,10 @@ app.updateEvent.addEventListener(function (frame) {
     var base2Pose = app.context.getEntityPose(base2GeoEntity);
     if (base2Pose.poseStatus & Argon.PoseStatus.KNOWN) {
         base2GeoTarget.position.copy(base2Pose.position);
-        console.log("Coordinates of base 2 obtained successfully");
+        // console.log("Coordinates of base 2 obtained successfully");
     }
     else {
-        console.log("Failed in getting coordinates for base 2");
+        // console.log("Failed in getting coordinates for base 2");
         // initialize to a fixed location in case we can't convert to geospatial
         base2GeoTarget.position.y = 0;
         base2GeoTarget.position.z = -4000;
@@ -364,10 +396,10 @@ app.updateEvent.addEventListener(function (frame) {
     var base3Pose = app.context.getEntityPose(base3GeoEntity);
     if (base3Pose.poseStatus & Argon.PoseStatus.KNOWN) {
         base3GeoTarget.position.copy(base3Pose.position);
-        console.log("Coordinates of base 3 obtained successfully");
+        // console.log("Coordinates of base 3 obtained successfully");
     }
     else {
-        console.log("Failed in getting coordinates for base 3");
+        // console.log("Failed in getting coordinates for base 3");
         // initialize to a fixed location in case we can't convert to geospatial
         base3GeoTarget.position.y = 0;
         base3GeoTarget.position.z = -4000;
@@ -377,10 +409,10 @@ app.updateEvent.addEventListener(function (frame) {
     var base4Pose = app.context.getEntityPose(base4GeoEntity);
     if (base4Pose.poseStatus & Argon.PoseStatus.KNOWN) {
         base4GeoTarget.position.copy(base4Pose.position);
-        console.log("Coordinates of base 4 obtained successfully");
+        // console.log("Coordinates of base 4 obtained successfully");
     }
     else {
-        console.log("Failed in getting coordinates for base 4");
+        // console.log("Failed in getting coordinates for base 4");
         // initialize to a fixed location in case we can't convert to geospatial
         base4GeoTarget.position.y = 0;
         base4GeoTarget.position.z = -4000;
@@ -390,10 +422,10 @@ app.updateEvent.addEventListener(function (frame) {
     var base5Pose = app.context.getEntityPose(base5GeoEntity);
     if (base5Pose.poseStatus & Argon.PoseStatus.KNOWN) {
         base5GeoTarget.position.copy(base5Pose.position);
-        console.log("Coordinates of base 5 obtained successfully");
+        // console.log("Coordinates of base 5 obtained successfully");
     }
     else {
-        console.log("Failed in getting coordinates for base 5");
+        // console.log("Failed in getting coordinates for base 5");
         // initialize to a fixed location in case we can't convert to geospatial
         base5GeoTarget.position.y = 0;
         base5GeoTarget.position.z = -4000;
@@ -403,10 +435,10 @@ app.updateEvent.addEventListener(function (frame) {
     var base6Pose = app.context.getEntityPose(base6GeoEntity);
     if (base6Pose.poseStatus & Argon.PoseStatus.KNOWN) {
         base6GeoTarget.position.copy(base6Pose.position);
-        console.log("Coordinates of base 6 obtained successfully");
+        // console.log("Coordinates of base 6 obtained successfully");
     }
     else {
-        console.log("Failed in getting coordinates for base 6");
+        // console.log("Failed in getting coordinates for base 6");
         // initialize to a fixed location in case we can't convert to geospatial
         base6GeoTarget.position.y = 0;
         base6GeoTarget.position.z = -4000;
