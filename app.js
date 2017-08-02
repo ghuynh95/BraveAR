@@ -110,6 +110,11 @@ function updateStats() {
     },
     success: function(data) {
       console.log(data['game']);
+      var hitter = data['game']['outcome']['hitter'];
+      var hitter = {'preferred_name': 'Danny', 'last_name': 'Santana'};
+      if (hitter != null) {
+        // change batter mesh
+      }
       var runners = data['game']['outcome']['runners'];
       var runners = [
         {'starting_base': 1, 'first_name': 'Freddie', 'last_name': 'Freeman'},
