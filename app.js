@@ -80,10 +80,10 @@ app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
 // Third: (-84.39490333199501, 33.77751678085018, 275)
 
 var bases = [
-  Cartesian3.fromDegrees(-84.3949744105339, 33.77727558123695, 274),
-  Cartesian3.fromDegrees(-84.39468741416931, 33.777251934179496, 274),
-  Cartesian3.fromDegrees(-84.39463376998901, 33.77746475746165, 275),
-  Cartesian3.fromDegrees(-84.39490333199501, 33.77751678085018, 275)
+  Cartesian3.fromDegrees(-84.396577, 33.781890, 274),
+  Cartesian3.fromDegrees(-84.396586, 33.782078, 274),
+  Cartesian3.fromDegrees(-84.396759, 33.782078, 274),
+  Cartesian3.fromDegrees(-84.396758, 33.781951, 274)
 ];
 
 var baseEntities = [];
