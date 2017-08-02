@@ -81,67 +81,216 @@ app.context.setDefaultReferenceFrame(app.context.localOriginEastUpSouth);
 // location, until our reality is set and we know the location.  Each time the reality changes, we update
 // the cube position.
 // create a 100m cube with a Buzz texture on it, that we will attach to a geospatial object at Georgia Tech
-var buzz = new THREE.Object3D;
+
+// bases = [
+//   // GLC
+//   Cartesian3.fromDegrees(-84.39662463963032, 33.781942974496715, 275),
+//   Cartesian3.fromDegrees(-84.39676277339458, 33.78193628646397, 276)
+// ];
+//
+// baseGeoTargets = [];
+// baseGeoEntities = [];
+// baseObjects = [];
+//
+// for (var i = 0; i < bases.length; i++) {
+//   var base = new THREE.Object3D;
+//   var loader = new THREE.TextureLoader();
+//   loader.load('images/braves_logo.png', function (texture) {
+//       //var geometry = new THREE.BoxGeometry(10, 10, 10);
+//       var geometry = new THREE.BoxGeometry(10, 10, 10);
+//       var material = new THREE.MeshBasicMaterial({ map: texture });
+//       var mesh = new THREE.Mesh(geometry, material);
+//       //mesh.scale.set(100, 100, 100);
+//       base.add(mesh);
+//   });
+//
+//   var baseGeoEntity = new Cesium.Entity({
+//       name: "Base " + i,
+//       position: bases[i],
+//       orientation: Cesium.Quaternion.IDENTITY
+//   });
+//   var baseGeoTarget = new THREE.Object3D;
+//   baseGeoTarget.add(base);
+//   scene.add(baseGeoTarget);
+//
+//   baseGeoTargets[i] = baseGeoTarget;
+//   baseObjects[i] = base;
+//   baseGeoEntities[i] = baseGeoEntity;
+//
+//   console.log("Base " + i + " created");
+// }
+
+var base1 = new THREE.Object3D;
 var loader = new THREE.TextureLoader();
-loader.load('buzz.png', function (texture) {
+loader.load('images/braves_logo.png', function (texture) {
+    //var geometry = new THREE.BoxGeometry(10, 10, 10);
     var geometry = new THREE.BoxGeometry(10, 10, 10);
     var material = new THREE.MeshBasicMaterial({ map: texture });
     var mesh = new THREE.Mesh(geometry, material);
-    mesh.scale.set(100, 100, 100);
-    buzz.add(mesh);
-});
-// have our geolocated object start somewhere, in this case
-// near Georgia Tech in Atlanta.
-// you should probably adjust this to a spot closer to you
-// (we found the lon/lat of Georgia Tech using Google Maps)
-var gatechGeoEntity = new Cesium.Entity({
-    name: "Georgia Tech",
-    position: Cartesian3.fromDegrees(-84.398881, 33.778463),
-    orientation: Cesium.Quaternion.IDENTITY
-});
-var gatechGeoTarget = new THREE.Object3D;
-gatechGeoTarget.add(buzz);
-scene.add(gatechGeoTarget);
-// create a 1m cube with a wooden box texture on it, that we will attach to the geospatial object when we create it
-// Box texture from https://www.flickr.com/photos/photoshoproadmap/8640003215/sizes/l/in/photostream/
-//, licensed under https://creativecommons.org/licenses/by/2.0/legalcode
-var base1GeoObject = new THREE.Object3D;
-var base1 = new THREE.Object3D();
-var loader = new THREE.TextureLoader();
-loader.load('box.png', function (texture) {
-    var geometry = new THREE.BoxGeometry(1, 1, 1);
-    var material = new THREE.MeshBasicMaterial({ map: texture });
-    var mesh = new THREE.Mesh(geometry, material);
+    //mesh.scale.set(100, 100, 100);
     base1.add(mesh);
 });
-var base1GeoEntity = new Argon.Cesium.Entity({
-    name: "I have a base1",
-    position: Cartesian3.ZERO,
+
+var base1GeoEntity = new Cesium.Entity({
+    name: "Base 1",
+    position: Cartesian3.fromDegrees(-84.39662463963032, 33.781942974496715, 275),
     orientation: Cesium.Quaternion.IDENTITY
 });
-base1GeoObject.add(base1);
-base1GeoObject.position.z = -10;
-scene.add(base1GeoObject);
-// Create a DIV to use to label the position and distance of the cube
-var boxLocDiv = document.getElementById("box-location");
-var boxLocDiv2 = boxLocDiv.cloneNode(true);
-var boxLabel = new THREE.CSS3DSprite([boxLocDiv, boxLocDiv2]);
-boxLabel.scale.set(0.02, 0.02, 0.02);
-boxLabel.position.set(0, 1.25, 0);
-base1GeoObject.add(boxLabel);
-// putting position and orientation in the constructor above is the
-// equivalent of doing this:
-//
-//     const boxPosition = new Cesium.ConstantPositionProperty
-//                   (Cartesian3.ZERO.clone(), ReferenceFrame.FIXED);
-//     boxGeoEntity.position = boxPosition;
-//     const boxOrientation = new Cesium.ConstantProperty(Cesium.Quaternion);
-//     boxOrientation.setValue(Cesium.Quaternion.IDENTITY);
-//     boxGeoEntity.orientation = boxOrientation;
-var boxInit = false;
-var boxCartographicDeg = [0, 0, 0];
+var base1GeoTarget = new THREE.Object3D;
+base1GeoTarget.add(base1);
+scene.add(base1GeoTarget);
+
+// baseGeoTargets[i] = baseGeoTarget;
+// baseObjects[i] = base;
+// baseGeoEntities[i] = baseGeoEntity;
+
+console.log("Base 1 created");
+
+//----------
+
+var base2 = new THREE.Object3D;
+var loader = new THREE.TextureLoader();
+loader.load('images/braves_logo.png', function (texture) {
+    //var geometry = new THREE.BoxGeometry(10, 10, 10);
+    var geometry = new THREE.BoxGeometry(10, 10, 10);
+    var material = new THREE.MeshBasicMaterial({ map: texture });
+    var mesh = new THREE.Mesh(geometry, material);
+    //mesh.scale.set(100, 100, 100);
+    base2.add(mesh);
+});
+
+var base2GeoEntity = new Cesium.Entity({
+    name: "Base 2",
+    position: Cartesian3.fromDegrees(-84.39676277339458, 33.78193628646397, 276),
+    orientation: Cesium.Quaternion.IDENTITY
+});
+var base2GeoTarget = new THREE.Object3D;
+base2GeoTarget.add(base2);
+scene.add(base2GeoTarget);
+
+// baseGeoTargets[i] = baseGeoTarget;
+// baseObjects[i] = base;
+// baseGeoEntities[i] = baseGeoEntity;
+
+console.log("Base 2 created");
+
+//----------
+
+var base3 = new THREE.Object3D;
+var loader = new THREE.TextureLoader();
+loader.load('images/braves_logo.png', function (texture) {
+    //var geometry = new THREE.BoxGeometry(10, 10, 10);
+    var geometry = new THREE.BoxGeometry(10, 10, 10);
+    var material = new THREE.MeshBasicMaterial({ map: texture });
+    var mesh = new THREE.Mesh(geometry, material);
+    //mesh.scale.set(100, 100, 100);
+    base3.add(mesh);
+});
+
+var base3GeoEntity = new Cesium.Entity({
+    name: "Base 3",
+    position: Cartesian3.fromDegrees(-84.3966219574213, 33.78208565240452, 277),
+    orientation: Cesium.Quaternion.IDENTITY
+});
+var base3GeoTarget = new THREE.Object3D;
+base3GeoTarget.add(base3);
+scene.add(base3GeoTarget);
+
+// baseGeoTargets[i] = baseGeoTarget;
+// baseObjects[i] = base;
+// baseGeoEntities[i] = baseGeoEntity;
+
+console.log("Base 3 created");
+
+//----------
+
+var base4 = new THREE.Object3D;
+var loader = new THREE.TextureLoader();
+loader.load('images/braves_logo.png', function (texture) {
+    //var geometry = new THREE.BoxGeometry(10, 10, 10);
+    var geometry = new THREE.BoxGeometry(10, 10, 10);
+    var material = new THREE.MeshBasicMaterial({ map: texture });
+    var mesh = new THREE.Mesh(geometry, material);
+    //mesh.scale.set(100, 100, 100);
+    base4.add(mesh);
+});
+
+var base4GeoEntity = new Cesium.Entity({
+    name: "Base 4",
+    position: Cartesian3.fromDegrees(-84.39677618443966, 33.782117977834986, 278),
+    orientation: Cesium.Quaternion.IDENTITY
+});
+var base4GeoTarget = new THREE.Object3D;
+base4GeoTarget.add(base4);
+scene.add(base4GeoTarget);
+
+// baseGeoTargets[i] = baseGeoTarget;
+// baseObjects[i] = base;
+// baseGeoEntities[i] = baseGeoEntity;
+
+console.log("Base 4 created");
+
+//----------
+
+var base5 = new THREE.Object3D;
+var loader = new THREE.TextureLoader();
+loader.load('images/braves_logo.png', function (texture) {
+    //var geometry = new THREE.BoxGeometry(10, 10, 10);
+    var geometry = new THREE.BoxGeometry(10, 10, 10);
+    var material = new THREE.MeshBasicMaterial({ map: texture });
+    var mesh = new THREE.Mesh(geometry, material);
+    //mesh.scale.set(100, 100, 100);
+    base5.add(mesh);
+});
+
+var base5GeoEntity = new Cesium.Entity({
+    name: "John",
+    position: Cartesian3.fromDegrees(-84.15679720000003, 34.0563506, 314),
+    orientation: Cesium.Quaternion.IDENTITY
+});
+var base5GeoTarget = new THREE.Object3D;
+base5GeoTarget.add(base5);
+scene.add(base5GeoTarget);
+
+// baseGeoTargets[i] = baseGeoTarget;
+// baseObjects[i] = base;
+// baseGeoEntities[i] = baseGeoEntity;
+
+console.log("Base 5 created");
+
+//----------
+
+var base6 = new THREE.Object3D;
+var loader = new THREE.TextureLoader();
+loader.load('images/braves_logo.png', function (texture) {
+    //var geometry = new THREE.BoxGeometry(10, 10, 10);
+    var geometry = new THREE.BoxGeometry(10, 10, 10);
+    var material = new THREE.MeshBasicMaterial({ map: texture });
+    var mesh = new THREE.Mesh(geometry, material);
+    //mesh.scale.set(100, 100, 100);
+    base6.add(mesh);
+});
+
+var base6GeoEntity = new Cesium.Entity({
+    name: "Arjun",
+    position: Cartesian3.fromDegrees(-84.2761898, 33.8395538, 287),
+    orientation: Cesium.Quaternion.IDENTITY
+});
+var base6GeoTarget = new THREE.Object3D;
+base6GeoTarget.add(base6);
+scene.add(base6GeoTarget);
+
+// baseGeoTargets[i] = baseGeoTarget;
+// baseObjects[i] = base;
+// baseGeoEntities[i] = baseGeoEntity;
+
+console.log("Base 6 created");
+
+//----------
+
 var lastInfoText = "";
 var lastBoxText = "";
+
 // make floating point output a little less ugly
 function toFixed(value, precision) {
     var power = Math.pow(10, precision || 0);
@@ -168,62 +317,115 @@ app.updateEvent.addEventListener(function (frame) {
         stage.position.copy(stagePose.position);
         stage.quaternion.copy(stagePose.orientation);
     }
-    // the first time through, we create a geospatial position for
-    // the box somewhere near us
-    if (!boxInit) {
-        var defaultFrame = app.context.getDefaultReferenceFrame();
-        // set the box's position to 10 meters away from the user.
-        // First, clone the userPose postion, and add 10 to the X
-        var base1Pos_1 = userPose.position.clone();
-        base1Pos_1.z -= 10;
-        // set the value of the box Entity to this local position, by
-        // specifying the frame of reference to our local frame
-        base1GeoEntity.position.setValue(base1Pos_1, defaultFrame);
-        // orient the box according to the local world frame
-        base1GeoEntity.orientation.setValue(Cesium.Quaternion.IDENTITY);
-        // now, we want to move the box's coordinates to the FIXED frame, so
-        // the box doesn't move if the local coordinate system origin changes.
-        if (Argon.convertEntityReferenceFrame(base1GeoEntity, frame.time, ReferenceFrame.FIXED)) {
-            // we will keep trying to reset it to FIXED until it works!
-            boxInit = true;
-        }
-    }
-    // get the local coordinates of the local box, and set the THREE object
+
+    // for (var i = 0; i < bases.length; i++) {
+    //   var baseGeoEntity = baseGeoEntities[i];
+    //   var baseGeoTarget = baseGeoTargets[i];
+    //   var basePose = app.context.getEntityPose(baseGeoEntity);
+    //   if (basePose.poseStatus & Argon.PoseStatus.KNOWN) {
+    //       baseGeoTarget.position.copy(basePose.position);
+    //       console.log("Coordinates of base " + i + " obtained successfully");
+    //   }
+    //   else {
+    //       console.log("Failed in getting coordinates for base " + i);
+    //       // initialize to a fixed location in case we can't convert to geospatial
+    //       baseGeoTarget.position.y = 0;
+    //       baseGeoTarget.position.z = -4000;
+    //       baseGeoTarget.position.x = 1000;
+    //   }
+    // }
+
     var base1Pose = app.context.getEntityPose(base1GeoEntity);
     if (base1Pose.poseStatus & Argon.PoseStatus.KNOWN) {
-        base1GeoObject.position.copy(base1GeoObject.position);
-        base1GeoObject.quaternion.copy(base1GeoObject.orientation);
-    }
-    // get the local coordinates of the GT box, and set the THREE object
-    var geoPose = app.context.getEntityPose(gatechGeoEntity);
-    if (geoPose.poseStatus & Argon.PoseStatus.KNOWN) {
-        gatechGeoTarget.position.copy(geoPose.position);
+        base1GeoTarget.position.copy(base1Pose.position);
+        console.log("Coordinates of base 1 obtained successfully");
     }
     else {
+        console.log("Failed in getting coordinates for base 1");
         // initialize to a fixed location in case we can't convert to geospatial
-        gatechGeoTarget.position.y = 0;
-        gatechGeoTarget.position.z = -4000;
-        gatechGeoTarget.position.x = 1000;
+        base1GeoTarget.position.y = 0;
+        base1GeoTarget.position.z = -4000;
+        base1GeoTarget.position.x = 1000;
     }
+
+    var base2Pose = app.context.getEntityPose(base2GeoEntity);
+    if (base2Pose.poseStatus & Argon.PoseStatus.KNOWN) {
+        base2GeoTarget.position.copy(base2Pose.position);
+        console.log("Coordinates of base 2 obtained successfully");
+    }
+    else {
+        console.log("Failed in getting coordinates for base 2");
+        // initialize to a fixed location in case we can't convert to geospatial
+        base2GeoTarget.position.y = 0;
+        base2GeoTarget.position.z = -4000;
+        base2GeoTarget.position.x = 1000;
+    }
+
+    var base3Pose = app.context.getEntityPose(base3GeoEntity);
+    if (base3Pose.poseStatus & Argon.PoseStatus.KNOWN) {
+        base3GeoTarget.position.copy(base3Pose.position);
+        console.log("Coordinates of base 3 obtained successfully");
+    }
+    else {
+        console.log("Failed in getting coordinates for base 3");
+        // initialize to a fixed location in case we can't convert to geospatial
+        base3GeoTarget.position.y = 0;
+        base3GeoTarget.position.z = -4000;
+        base3GeoTarget.position.x = 1000;
+    }
+
+    var base4Pose = app.context.getEntityPose(base4GeoEntity);
+    if (base4Pose.poseStatus & Argon.PoseStatus.KNOWN) {
+        base4GeoTarget.position.copy(base4Pose.position);
+        console.log("Coordinates of base 4 obtained successfully");
+    }
+    else {
+        console.log("Failed in getting coordinates for base 4");
+        // initialize to a fixed location in case we can't convert to geospatial
+        base4GeoTarget.position.y = 0;
+        base4GeoTarget.position.z = -4000;
+        base4GeoTarget.position.x = 1000;
+    }
+
+    var base5Pose = app.context.getEntityPose(base5GeoEntity);
+    if (base5Pose.poseStatus & Argon.PoseStatus.KNOWN) {
+        base5GeoTarget.position.copy(base5Pose.position);
+        console.log("Coordinates of base 5 obtained successfully");
+    }
+    else {
+        console.log("Failed in getting coordinates for base 5");
+        // initialize to a fixed location in case we can't convert to geospatial
+        base5GeoTarget.position.y = 0;
+        base5GeoTarget.position.z = -4000;
+        base5GeoTarget.position.x = 1000;
+    }
+
+    var base6Pose = app.context.getEntityPose(base6GeoEntity);
+    if (base6Pose.poseStatus & Argon.PoseStatus.KNOWN) {
+        base6GeoTarget.position.copy(base6Pose.position);
+        console.log("Coordinates of base 6 obtained successfully");
+    }
+    else {
+        console.log("Failed in getting coordinates for base 6");
+        // initialize to a fixed location in case we can't convert to geospatial
+        base6GeoTarget.position.y = 0;
+        base6GeoTarget.position.z = -4000;
+        base6GeoTarget.position.x = 1000;
+    }
+
     // rotate the boxes at a constant speed, independent of frame rates
     // to make it a little less boring
-    buzz.rotateY(2 * frame.deltaTime / 10000);
-    base1.rotateY(3 * frame.deltaTime / 10000);
-    //
-    // stuff to print out the status message.  It's fairly expensive to convert FIXED
-    // coordinates back to LLA, but those coordinates probably make the most sense as
-    // something to show the user, so we'll do that computation.
-    //
-    // we'll compute the distance to the cube, just for fun. If the cube could be further away,
-    // we'd want to use Cesium.EllipsoidGeodesic, rather than Euclidean distance, but this is fine here.
-    var userPos = user.getWorldPosition();
-    var buzzPos = buzz.getWorldPosition();
-    var base1Pos = base1.getWorldPosition();
-    var distanceToBase1 = userPos.distanceTo(base1Pos);
-    var distanceToBuzz = userPos.distanceTo(buzzPos);
-    // cartographicDegrees is a 3 element array containing [longitude, latitude, height]
-    var gpsCartographicDeg = [0, 0, 0];
-    // create some feedback text
+    // for (var i = 0; i < bases.length; i++) {
+    //   var base = baseObjects[i];
+    //   base.rotateY(2 * frame.deltaTime / 10000);
+    // }
+    base1.rotateY(2 * frame.deltaTime / 10000);
+    base2.rotateY(2 * frame.deltaTime / 10000);
+    base3.rotateY(2 * frame.deltaTime / 10000);
+    base4.rotateY(2 * frame.deltaTime / 10000);
+    base5.rotateY(2 * frame.deltaTime / 10000);
+    base6.rotateY(2 * frame.deltaTime / 10000);
+
     var infoText = "Geospatial Argon example:<br>";
     // get user position in global coordinates
     var userPoseFIXED = app.context.getEntityPose(app.context.user, ReferenceFrame.FIXED);
@@ -242,37 +444,13 @@ app.updateEvent.addEventListener(function (frame) {
     else {
         infoText += "Your location is unknown<br>";
     }
-    var base1PoseFIXED = app.context.getEntityPose(base1GeoEntity, ReferenceFrame.FIXED);
-    if (base1PoseFIXED.poseStatus & Argon.PoseStatus.KNOWN) {
-        var boxLLA = Cesium.Ellipsoid.WGS84.cartesianToCartographic(base1PoseFIXED.position);
-        if (boxLLA) {
-            boxCartographicDeg = [
-                CesiumMath.toDegrees(boxLLA.longitude),
-                CesiumMath.toDegrees(boxLLA.latitude),
-                boxLLA.height
-            ];
-        }
-    }
-    infoText += " distance to Buzz box @ GT (" + toFixed(distanceToBuzz, 2) + ")<br>";
-    infoText += "box is " + toFixed(distanceToBase1, 2) + " meters away";
-    var boxLabelText;
-    if (base1PoseFIXED.poseStatus & Argon.PoseStatus.KNOWN) {
-        boxLabelText = "a wooden box!<br>lla = " + toFixed(boxCartographicDeg[0], 6) + ", ";
-        boxLabelText += toFixed(boxCartographicDeg[1], 6) + ", " + toFixed(boxCartographicDeg[2], 2) + "";
-    }
-    else {
-        boxLabelText = "a wooden box!<br>Location unknown";
-    }
+
     if (lastInfoText !== infoText) {
         locationElements[0].innerHTML = infoText;
         locationElements[1].innerHTML = infoText;
         lastInfoText = infoText;
     }
-    if (lastBoxText !== boxLabelText) {
-        boxLocDiv.innerHTML = boxLabelText;
-        boxLocDiv2.innerHTML = boxLabelText;
-        lastBoxText = boxLabelText;
-    }
+
 });
 // renderEvent is fired whenever argon wants the app to update its display
 app.renderEvent.addEventListener(function () {
