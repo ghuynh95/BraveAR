@@ -110,8 +110,12 @@ function updateStats() {
     },
     success: function(data) {
       console.log(data['game']);
-      var hitter = data['game']['outcome']['hitter'];
-      var hitter = {'preferred_name': 'Danny', 'last_name': 'Santana'};
+      try {
+        var hitter = data['game']['outcome']['hitter'];
+      } catch(e) {
+        return;
+      }
+      // var hitter = {'preferred_name': 'Danny', 'last_name': 'Santana'};
       if (hitter != null) {
         var name = hitter['preferred_name'].toLowerCase() + "_" + hitter['last_name'].toLowerCase();
         loader.load('images/lineup/' + name + ".jpg", function (texture) {
@@ -120,11 +124,15 @@ function updateStats() {
         });
         console.log("Mesh updated successfully");
       }
-      var runners = data['game']['outcome']['runners'];
-      var runners = [
-        {'starting_base': 1, 'preferred_name': 'Freddie', 'last_name': 'Freeman'},
-        {'starting_base': 2, 'preferred_name': 'Nick', 'last_name': 'Markakis'}
-      ];
+      try {
+        var runners = data['game']['outcome']['runners'];
+      } catch(e) {
+        return;
+      }
+      // var runners = [
+      //   {'starting_base': 1, 'preferred_name': 'Freddie', 'last_name': 'Freeman'},
+      //   {'starting_base': 2, 'preferred_name': 'Nick', 'last_name': 'Markakis'}
+      // ];
       if (runners != null) {
         runners.forEach(function(runner) {
           var base;
@@ -150,7 +158,7 @@ function updateStats() {
       }
     }
   });
-  // setTimeout(updateStats, 60000);
+  setTimeout(updateStats, 15000);
 }
 
 // var xhttp = new XMLHttpRequest();
