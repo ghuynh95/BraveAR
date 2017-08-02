@@ -113,7 +113,12 @@ function updateStats() {
       var hitter = data['game']['outcome']['hitter'];
       var hitter = {'preferred_name': 'Danny', 'last_name': 'Santana'};
       if (hitter != null) {
-        // change batter mesh
+        var name = hitter['preferred_name'].toLowerCase() + "_" + hitter['last_name'].toLowerCase();
+        loader.load('images/lineup/' + name + ".jpg", function (texture) {
+            var material = new THREE.MeshBasicMaterial({ map: texture });
+            mesh1.material = material;
+        });
+        console.log("Mesh updated successfully");
       }
       var runners = data['game']['outcome']['runners'];
       var runners = [
