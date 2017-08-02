@@ -83,7 +83,6 @@ var url = baseURL + year + '/' + month + '/' + date + '/schedule.json?api_key=' 
 
 var bravesID = '12079497-e414-450a-8bf2-29f91de646bf';
 var gameID = '';
-var gameID = '88cf6dbf-9b6d-4676-9d79-71bd8ad74ba4';
 
 $.ajax({
   url: url,
@@ -95,7 +94,7 @@ $.ajax({
     console.log(data);
     data.games.forEach(function(game) {
       if (game['away_team'] === bravesID || game['home_team'] === bravesID) {
-        // gameID = game['id'];
+        gameID = game['id'];
       }
     });
     updateStats();
@@ -112,12 +111,14 @@ function updateStats() {
     success: function(data) {
       console.log(data['game']);
       var runners = data['game']['outcome']['runners'];
+      var runners = [
+        {'starting_base': 1, 'first_name': 'Freddie', 'last_name': 'Freeman'},
+        {'starting_base': 2, 'first_name': 'Nick', 'last_name': 'Markakis'}
+      ]
       if (runners != null) {
         runners.forEach(function(runner) {
           var base;
-          if (runner['starting_base'] === 0) {
-            base = base1;
-          } else if (runner['starting_base'] === 1) {
+          if (runner['starting_base'] === 1) {
             base = base2;
           } else if (runner['starting_base'] === 2) {
             base = base3;
